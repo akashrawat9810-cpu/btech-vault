@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BTech Vault - Ultimate Academic Workspace</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #050814; scroll-behavior: smooth; }
+        .glass-nav { background: rgba(5, 8, 20, 0.85); backdrop-filter: blur(16px); }
+        .glass-card { background: rgba(15, 23, 42, 0.65); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .glow-effect:hover { box-shadow: 0 0 40px -10px rgba(99, 102, 241, 0.4); transform: translateY(-3px); transition: all 0.3s ease; }
+        
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #050814; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #4f46e5; }
+        
+        .tab-active { background-color: #4f46e5; color: white; border-color: #4f46e5; }
+        .tab-inactive { background-color: rgba(30, 41, 59, 0.5); color: #94a3b8; border-color: rgba(255, 255, 255, 0.1); }
+    </style>
+</head>
+<body class="text-slate-100 antialiased overflow-x-hidden selection:bg-indigo-500 selection:text-white">
+
+    <!-- Top MacOS Style Nav Bar -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sticky top-4 z-50">
+        <header class="glass-nav rounded-2xl px-6 py-4 border border-slate-800 flex justify-between items-center shadow-2xl">
+            <div class="flex items-center gap-4">
+                <div class="flex gap-1.5 cursor-pointer">
+                    <div class="w-3 h-3 rounded-full bg-rose-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-amber-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-emerald-500"></div>
+                </div>
+                <div class="h-4 w-[1px] bg-slate-800"></div>
+                <div class="flex items-center gap-2">
+                    <span class="bg-indigo-600 text-white text-xs font-bold px-2.5 py-1 rounded-lg">BTech</span>
+                    <span class="font-extrabold tracking-tight text-lg text-white">Vault</span>
+                </div>
+            </div>
+
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-400">
+                <a href="#home" class="text-white font-semibold transition-colors">Home</a>
+                <a href="#academic-explorer" class="hover:text-white transition-colors">Select Year & Subjects</a>
+                <a href="#quiz-zone" class="hover:text-white transition-colors flex items-center gap-1.5 text-indigo-400 font-semibold">Quiz Zone <span class="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span></a>
+                <a href="#news" class="hover:text-white transition-colors">Live News</a>
+                <a href="#query-hub" class="hover:text-white transition-colors">Query Hub</a>
+            </nav>
+
+            <div class="flex items-center gap-4">
+                <a href="#" class="bg-white text-slate-950 px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-slate-200 transition-all shadow-lg flex items-center gap-2">
+                    Login <i class="fa-solid fa-arrow-right text-xs"></i>
+                </a>
+            </div>
+        </header>
+    </div>
+
+    <!-- Live News Marquee -->
+    <div id="news" class="bg-indigo-600/10 border-y border-indigo-500/20 py-2.5 mt-8 overflow-hidden flex items-center">
+        <span class="bg-indigo-600 text-white text-[10px] font-bold px-3 py-1 rounded-r-lg mr-4 uppercase tracking-widest z-10 whitespace-nowrap">Latest Updates</span>
+        <marquee scrollamount="5" class="text-xs text-indigo-300 font-medium tracking-wide">
+            🚀 AKTU Odd Semester Exam Dates Announced | 📝 Practical Exams starting soon | 💡 New Quantum Series added for B.Tech 2nd & 3rd Year | 🔔 Submit your scholarship forms before deadline!
+        </marquee>
+    </div>
+
+    <!-- Hero Section -->
+    <main id="home" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-20 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative">
+        <div class="absolute top-20 right-20 w-96 h-96 bg-indigo-600/25 rounded-full blur-[100px] -z-10"></div>
+        <div class="absolute bottom-10 left-10 w-72 h-72 bg-purple-600/25 rounded-full blur-[100px] -z-10"></div>
+
+        <div class="lg:col-span-7 space-y-8">
+            <h1 class="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.08]">
+                Everything you need to <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">Study Smarter.</span>
+            </h1>
+            
+            <p class="text-slate-400 text-lg max-w-xl font-normal leading-relaxed">
+                Access branch-wise curriculum notes, previous-year question papers, quantum series, and custom topic-wise quizzes with detailed performance analytics.
+            </p>
+            
+            <div class="flex gap-4">
+                <a href="#academic-explorer" class="bg-indigo-600 hover:bg-indigo-500 text-white px-7 py-3.5 rounded-xl text-sm font-bold transition-all flex items-center gap-2 shadow-lg shadow-indigo-600/30 hover:-translate-y-1">
+                    Explore Curriculum <i class="fa-solid fa-layer-group"></i>
+                </a>
+                <a href="#quiz-zone" class="glass-card text-white hover:text-indigo-300 border border-slate-700 hover:border-indigo-500 px-7 py-3.5 rounded-xl text-sm font-bold transition-all hover:-translate-y-1">
+                    Custom Quiz Zone <i class="fa-solid fa-stopwatch ml-1"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="lg:col-span-5 space-y-5">
+            <div class="glass-card p-5 rounded-3xl border border-amber-500/30 shadow-2xl glow-effect">
+                <div class="flex gap-3 mb-2 items-center">
+                    <div class="w-8 h-8 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center"><i class="fa-solid fa-lightbulb"></i></div>
+                    <h3 class="text-sm font-bold text-white">Daily Engineering Fact</h3>
+                </div>
+                <p class="text-xs text-slate-300 leading-relaxed pl-11">
+                    Did you know? The first computer bug was an actual moth trapped inside the Harvard Mark II relay in 1947!
+                </p>
+            </div>
+
+            <div class="glass-card p-6 rounded-3xl border border-indigo-500/30 shadow-2xl glow-effect">
+                <div class="flex justify-between items-start mb-3">
+                    <div class="flex gap-3 items-center">
+                        <div class="w-10 h-10 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold text-lg"><i class="fa-solid fa-bolt"></i></div>
+                        <div>
+                            <h3 class="text-sm font-bold text-white">Live Quiz Portal</h3>
+                            <p class="text-[11px] text-slate-400">Configurable Units & Question Counts</p>
+                        </div>
+                    </div>
+                    <span class="bg-emerald-500/10 text-emerald-400 text-[10px] font-bold px-2 py-1 rounded-md border border-emerald-500/20 animate-pulse">Ready</span>
+                </div>
+                <p class="text-[11px] text-slate-400 mt-2">Select Year, Branch, Subject, Unit & Topics below to test your speed.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- ACADEMIC EXPLORER (Notes, Syllabus, PYQ, Quantum) -->
+    <section id="academic-explorer" class="py-20 bg-slate-950/60 border-y border-slate-800 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl sm:text-4xl font-black text-white tracking-tight mb-3">Branch-Wise Academic Explorer</h2>
+                <p class="text-slate-400 text-sm max-w-2xl mx-auto">Select your year, branch, and resource type to instantly explore notes, syllabus, PYQs, and quantum series.</p>
+            </div>
+
+            <!-- Year Selection -->
+            <div class="flex flex-wrap justify-center gap-3 mb-6" id="year-tabs">
+                <button onclick="setYear(1)" id="btn-yr-1" class="tab-active px-6 py-3 rounded-xl text-sm font-bold border transition-all shadow-md">1st Year (Common)</button>
+                <button onclick="setYear(2)" id="btn-yr-2" class="tab-inactive px-6 py-3 rounded-xl text-sm font-bold border transition-all">2nd Year</button>
+                <button onclick="setYear(3)" id="btn-yr-3" class="tab-inactive px-6 py-3 rounded-xl text-sm font-bold border transition-all">3rd Year</button>
+                <button onclick="setYear(4)" id="btn-yr-4" class="tab-inactive px-6 py-3 rounded-xl text-sm font-bold border transition-all">4th Year</button>
+            </div>
+
+            <!-- Branch Selection (Visible for 2nd & 3rd Year) -->
+            <div id="branch-container" class="flex flex-wrap justify-center gap-2 mb-6 hidden">
+                <span class="text-xs text-slate-400 self-center mr-2 font-bold uppercase tracking-wider">Select Branch:</span>
+                <button onclick="setBranch('CSE')" id="branch-cse" class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-xs font-bold border border-indigo-500 transition-all">CSE</button>
+                <button onclick="setBranch('AIML')" id="branch-aiml" class="bg-slate-900 text-slate-300 px-4 py-2 rounded-lg text-xs font-bold border border-slate-700 transition-all">AIML</button>
+                <button onclick="setBranch('IT')" id="branch-it" class="bg-slate-900 text-slate-300 px-4 py-2 rounded-lg text-xs font-bold border border-slate-700 transition-all">IT</button>
+                <button onclick="setBranch('ECE')" id="branch-ece" class="bg-slate-900 text-slate-300 px-4 py-2 rounded-lg text-xs font-bold border border-slate-700 transition-all">ECE</button>
+                <button onclick="setBranch('EEE')" id="branch-eee" class="bg-slate-900 text-slate-300 px-4 py-2 rounded-lg text-xs font-bold border border-slate-700 transition-all">EEE</button>
+                <button onclick="setBranch('Civil')" id="branch-civil" class="bg-slate-900 text-slate-300 px-4 py-2 rounded-lg text-xs font-bold border border-slate-700 transition-all">Civil</button>
+                <button onclick="setBranch('Mechanical')" id="branch-mech" class="bg-slate-900 text-slate-300 px-4 py-2 rounded-lg text-xs font-bold border border-slate-700 transition-all">Mechanical</button>
+            </div>
+
+            <!-- Resource Type Selection -->
+            <div class="flex flex-wrap justify-center gap-3 mb-12">
+                <button onclick="setResource('syllabus')" id="res-syllabus" class="tab-active px-5 py-2.5 rounded-lg text-xs font-bold border transition-all flex items-center gap-2"><i class="fa-solid fa-list"></i> Syllabus</button>
+                <button onclick="setResource('notes')" id="res-notes" class="tab-inactive px-5 py-2.5 rounded-lg text-xs font-bold border transition-all flex items-center gap-2"><i class="fa-solid fa-book-open"></i> Notes</button>
+                <button onclick="setResource('pyq')" id="res-pyq" class="tab-inactive px-5 py-2.5 rounded-lg text-xs font-bold border transition-all flex items-center gap-2"><i class="fa-solid fa-file-lines"></i> PYQs</button>
+                <button onclick="setResource('quantum')" id="res-quantum" class="tab-inactive px-5 py-2.5 rounded-lg text-xs font-bold border transition-all flex items-center gap-2"><i class="fa-solid fa-cube"></i> Quantum</button>
+            </div>
+
+            <!-- Subject Grid Display -->
+            <div id="explorer-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 min-h-[220px]">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- CUSTOM CONFIGURABLE QUIZ ZONE -->
+    <section id="quiz-zone" class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+            <span class="text-pink-400 text-xs font-extrabold uppercase tracking-widest bg-pink-500/10 px-3 py-1 rounded-full border border-pink-500/20">Custom Quiz Arena</span>
+            <h2 class="text-3xl sm:text-4xl font-black text-white mt-3 mb-2">Test by Year, Subject & Topic</h2>
+            <p class="text-slate-400 text-xs">Configure your quiz parameters, pick unit & topic, and select quiz size in multiples of 10.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <!-- Step 1: Configuration Form -->
+            <div class="lg:col-span-5 glass-card p-6 rounded-3xl border border-indigo-500/30 space-y-4">
+                <h3 class="text-sm font-bold text-white border-b border-slate-800 pb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-sliders text-indigo-400"></i> Configure Quiz Parameters
+                </h3>
+
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-400 uppercase mb-1">Select Year</label>
+                    <select id="quiz-year" onchange="updateQuizSubjects()" class="w-full bg-slate-900 border border-slate-700 text-white rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-indigo-500">
+                        <option value="1">1st Year</option>
+                        <option value="2">2nd Year</option>
+                        <option value="3">3rd Year</option>
+                    </select>
+                </div>
+
+                <div id="quiz-branch-wrapper" class="hidden">
+                    <label class="block text-[11px] font-bold text-slate-400 uppercase mb-1">Select Branch</label>
+                    <select id="quiz-branch" onchange="updateQuizSubjects()" class="w-full bg-slate-900 border border-slate-700 text-white rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-indigo-500">
+                        <option value="CSE">CSE</option>
+                        <option value="AIML">AIML</option>
+                        <option value="IT">IT</option>
+                        <option value="ECE">ECE</option>
+                        <option value="EEE">EEE</option>
+                        <option value="Civil">Civil</option>
+                        <option value="Mechanical">Mechanical</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-400 uppercase mb-1">Select Subject</label>
+                    <select id="quiz-subject" onchange="updateQuizUnits()" class="w-full bg-slate-900 border border-slate-700 text-white rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-indigo-500">
+                        <!-- Populated by JS -->
+                    </select>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-400 uppercase mb-1">Select Unit</label>
+                        <select id="quiz-unit" onchange="updateQuizTopics()" class="w-full bg-slate-900 border border-slate-700 text-white rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-indigo-500">
+                            <option value="1">Unit 1</option>
+                            <option value="2">Unit 2</option>
+                            <option value="3">Unit 3</option>
+                            <option value="4">Unit 4</option>
+                            <option value="5">Unit 5</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-400 uppercase mb-1">Quiz Size (Multiples of 10)</label>
+                        <select id="quiz-size" class="w-full bg-slate-900 border border-slate-700 text-white rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-indigo-500">
+                            <option value="10">10 Questions</option>
+                            <option value="20">20 Questions</option>
+                            <option value="30">30 Questions</option>
+                            <option value="40">40 Questions</option>
+                            <option value="50">50 Questions</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-400 uppercase mb-1">Select Specific Topic</label>
+                    <select id="quiz-topic" class="w-full bg-slate-900 border border-slate-700 text-white rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-indigo-500">
+                        <!-- Populated by JS -->
+                    </select>
+                </div>
+
+                <button onclick="startCustomQuiz()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white py-3 rounded-xl text-xs font-bold transition-all shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-play"></i> Start Custom Quiz
+                </button>
+            </div>
+
+            <!-- Step 2: Active Quiz Interface & Result Dashboard -->
+            <div class="lg:col-span-7">
+                <div id="quiz-container" class="glass-card p-8 rounded-3xl border border-slate-800 min-h-[420px] flex flex-col justify-between">
+                    <div class="text-center py-20 space-y-4">
+                        <div class="w-16 h-16 rounded-2xl bg-indigo-500/10 text-indigo-400 mx-auto flex items-center justify-center text-2xl font-bold border border-indigo-500/20">
+                            <i class="fa-solid fa-laptop-code"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">Quiz Arena is Ready</h3>
+                        <p class="text-xs text-slate-400 max-w-md mx-auto">Configure your parameters on the left and click 'Start Custom Quiz' to begin your timed test with accuracy and progress tracking.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- QUERY HUB -->
+    <section id="query-hub" class="py-20 bg-[#0a0e1a] border-t border-slate-800 relative">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-end mb-8">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-black text-white flex items-center gap-3">
+                        <i class="fa-solid fa-messages text-indigo-500"></i> Peer Query Hub
+                    </h2>
+                    <p class="text-slate-400 text-xs mt-2">Ask doubts, attach photo solutions, upvote problems, and get Teacher Verified answers.</p>
+                </div>
+                <button class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-indigo-500 transition-colors shadow-lg">
+                    + Ask Doubt
+                </button>
+            </div>
+
+            <div class="space-y-4">
+                <div class="glass-card p-5 rounded-2xl border border-indigo-500/25 glow-effect flex gap-4">
+                    <div class="flex flex-col items-center justify-start gap-1 text-slate-400">
+                        <button class="text-indigo-400 hover:text-indigo-300 text-lg"><i class="fa-solid fa-caret-up"></i></button>
+                        <span class="font-bold text-sm text-white">142</span>
+                        <button class="hover:text-slate-200 text-lg"><i class="fa-solid fa-caret-down"></i></button>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex justify-between items-start">
+                            <h4 class="text-sm font-bold text-white mb-1">How to convert NFA to DFA with epsilon transitions?</h4>
+                            <span class="bg-emerald-500/10 text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded border border-emerald-500/30 flex items-center gap-1"><i class="fa-solid fa-check-double"></i> Teacher Verified</span>
+                        </div>
+                        <p class="text-xs text-slate-400 mb-3">Stuck at step 3 while finding epsilon closure. Can someone share a solved diagram?</p>
+                        
+                        <div class="bg-slate-900/80 rounded-xl p-3 border border-slate-700/50 mt-2">
+                            <div class="flex items-center gap-2 mb-1.5">
+                                <div class="w-5 h-5 rounded-full bg-emerald-600 flex items-center justify-center text-[8px] text-white"><i class="fa-solid fa-user-tie"></i></div>
+                                <span class="text-xs font-bold text-slate-300">Prof. Sharma (CS Dept)</span>
+                            </div>
+                            <p class="text-xs text-slate-400 mb-2">First find e-closure of initial state. Attached step-by-step solved diagram.</p>
+                            <button class="text-indigo-400 text-[10px] font-bold flex items-center gap-1 hover:underline"><i class="fa-regular fa-image"></i> View_Solution_Image.jpg</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card p-5 rounded-2xl border border-slate-800 flex gap-4">
+                    <div class="flex flex-col items-center justify-start gap-1 text-slate-400">
+                        <button class="hover:text-indigo-400 text-lg"><i class="fa-solid fa-caret-up"></i></button>
+                        <span class="font-bold text-sm text-slate-300">56</span>
+                        <button class="hover:text-slate-200 text-lg"><i class="fa-solid fa-caret-down"></i></button>
+                    </div>
+                    <div class="flex-1">
+                        <h4 class="text-sm font-bold text-white mb-1">Important topics for Engineering Mathematics-2? (BAS-203)</h4>
+                        <p class="text-xs text-slate-400 mb-3">Exams are near, what are the highest weightage units to pass easily?</p>
+                        <div class="mt-2 flex gap-3 text-[10px] font-bold text-slate-500">
+                            <button class="hover:text-white transition-colors"><i class="fa-solid fa-reply"></i> Add Reply / Photo</button>
+                            <button class="hover:text-white transition-colors"><i class="fa-regular fa-comment"></i> 8 Replies</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 bg-[#050814] py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-slate-600">
+            <p>© 2026 BTech Vault. Built for Engineering Students. <span class="text-indigo-500 font-bold mx-2">|</span> Branch-Wise Curriculum & Custom Quiz Engine.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Data & Logic -->
+    <script>
+        // --- SUPABASE DATABASE CONNECTION SETUP ---
+        const SUPABASE_URL = 'https://qdzitnqaubqneqfayhnq.supabase.co'; 
+        const SUPABASE_KEY = 'sb_publishable_JW8Vie-C86qE5O9GbJqK_w_7OHtLol-'; // Apni asli 'sb_publishable_...' wali key yahan paste karein
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        // Exact Curriculum Data mapped as requested
+        const curriculumData = {
+            1: {
+                common: [
+                    { name: "Mathematics-I", code: "BAS-103", icon: "fa-calculator" },
+                    { name: "Mathematics-II", code: "BAS-203", icon: "fa-superscript" },
+                    { name: "Physics", code: "BAS-101", icon: "fa-atom" },
+                    { name: "Chemistry", code: "BAS-102", icon: "fa-flask" },
+                    { name: "Basic Electrical Engg", code: "BEE-101", icon: "fa-plug" },
+                    { name: "Electronics Engg", code: "BEC-101", icon: "fa-microchip" },
+                    { name: "PPS (C Programming)", code: "BCS-101", icon: "fa-code" },
+                    { name: "Soft Skills", code: "BAS-105", icon: "fa-users" },
+                    { name: "Mechanical Engg", code: "BME-101", icon: "fa-gear" },
+                    { name: "Environment (EVS)", code: "BAS-104", icon: "fa-leaf" }
+                ]
+            },
+            2: {
+                branches: ["CSE", "AIML", "IT", "ECE", "EEE", "Civil", "Mechanical"],
+                subjects: {
+                    "CSE": [
+                        { name: "Computer Org & Architecture", code: "BCS-302", icon: "fa-server" },
+                        { name: "Data Structures", code: "BCS-301", icon: "fa-network-wired" },
+                        { name: "Discrete Structures & Theory", code: "BAS-301", icon: "fa-project-diagram" },
+                        { name: "Math-IV (PDE & Complex Analysis)", code: "BAS-403", icon: "fa-calculator" },
+                        { name: "Object Oriented Programming", code: "BCS-303", icon: "fa-laptop-code" },
+                        { name: "Python Programming", code: "BCS-304", icon: "fa-code" },
+                        { name: "Cyber Security", code: "BNC-401", icon: "fa-shield-halved" },
+                        { name: "Technical Communication", code: "BAS-302", icon: "fa-pen-nib" },
+                        { name: "Operating Systems", code: "BCS-401", icon: "fa-microchip" },
+                        { name: "Universal Human Values", code: "BVE-401", icon: "fa-heart" },
+                        { name: "Theory of Automata & Formal Lang", code: "BCS-402", icon: "fa-gears" },
+                        { name: "Open Elective-I", code: "BOE-401", icon: "fa-book-bookmark" }
+                    ],
+                    "AIML": [
+                        { name: "Computer Org & Architecture", code: "BCS-302", icon: "fa-server" },
+                        { name: "Data Structures", code: "BCS-301", icon: "fa-network-wired" },
+                        { name: "Discrete Structures & Theory", code: "BAS-301", icon: "fa-project-diagram" },
+                        { name: "Math-IV (PDE & Complex Analysis)", code: "BAS-403", icon: "fa-calculator" },
+                        { name: "Object Oriented Programming", code: "BCS-303", icon: "fa-laptop-code" },
+                        { name: "Python Programming", code: "BCS-304", icon: "fa-code" },
+                        { name: "Cyber Security", code: "BNC-401", icon: "fa-shield-halved" },
+                        { name: "Technical Communication", code: "BAS-302", icon: "fa-pen-nib" },
+                        { name: "Operating Systems", code: "BCS-401", icon: "fa-microchip" },
+                        { name: "Universal Human Values", code: "BVE-401", icon: "fa-heart" },
+                        { name: "Theory of Automata & Formal Lang", code: "BCS-402", icon: "fa-gears" },
+                        { name: "Open Elective-I", code: "BOE-401", icon: "fa-book-bookmark" }
+                    ],
+                    "IT": [
+                        { name: "Computer Org & Architecture", code: "BIT-302", icon: "fa-server" },
+                        { name: "Data Structures", code: "BIT-301", icon: "fa-network-wired" },
+                        { name: "Discrete Structures & Theory", code: "BAS-301", icon: "fa-project-diagram" },
+                        { name: "Math-IV", code: "BAS-403", icon: "fa-calculator" },
+                        { name: "Object Oriented Programming", code: "BIT-303", icon: "fa-laptop-code" },
+                        { name: "Python Programming", code: "BIT-304", icon: "fa-code" },
+                        { name: "Cyber Security", code: "BNC-401", icon: "fa-shield-halved" },
+                        { name: "Operating Systems", code: "BIT-401", icon: "fa-microchip" },
+                        { name: "TAFL", code: "BIT-402", icon: "fa-gears" }
+                    ],
+                    "ECE": [
+                        { name: "Electronic Devices", code: "BEC-301", icon: "fa-microchip" },
+                        { name: "Digital System Design", code: "BEC-302", icon: "fa-bolt" },
+                        { name: "Network Analysis & Synthesis", code: "BEC-303", icon: "fa-wave-square" },
+                        { name: "Math-IV", code: "BAS-403", icon: "fa-calculator" },
+                        { name: "Signals and Systems", code: "BEC-401", icon: "fa-chart-line" },
+                        { name: "Control Systems", code: "BEC-402", icon: "fa-sliders" }
+                    ],
+                    "EEE": [
+                        { name: "Electrical Machines-I", code: "BEE-301", icon: "fa-bolt" },
+                        { name: "Network Analysis", code: "BEE-302", icon: "fa-wave-square" },
+                        { name: "Digital Electronics", code: "BEE-303", icon: "fa-microchip" },
+                        { name: "Math-IV", code: "BAS-403", icon: "fa-calculator" }
+                    ],
+                    "Civil": [
+                        { name: "Surveying & Geomatics", code: "BCE-301", icon: "fa-compass" },
+                        { name: "Solid Mechanics", code: "BCE-302", icon: "fa-cube" },
+                        { name: "Fluid Mechanics", code: "BCE-303", icon: "fa-water" }
+                    ],
+                    "Mechanical": [
+                        { name: "Thermodynamics", code: "BME-301", icon: "fa-fire" },
+                        { name: "Fluid Mechanics", code: "BME-302", icon: "fa-water" },
+                        { name: "Material Science", code: "BME-303", icon: "fa-atom" }
+                    ]
+                }
+            },
+            3: {
+                branches: ["CSE", "AIML", "IT"],
+                subjects: {
+                    "CSE": [
+                        { name: "Database Management System", code: "BCS-501", icon: "fa-database" },
+                        { name: "Design & Analysis of Algorithm", code: "BCS-502", icon: "fa-chart-bar" },
+                        { name: "Data Analytics", code: "BCS-503", icon: "fa-chart-pie" },
+                        { name: "Mathematical Foundation of CS", code: "BAS-501", icon: "fa-square-root-variable" },
+                        { name: "Object Oriented System Design (C++)", code: "BCS-601", icon: "fa-code" },
+                        { name: "Artificial Intelligence", code: "BCS-602", icon: "fa-brain" },
+                        { name: "Application of Soft Computing", code: "BCS-603", icon: "fa-network-wired" },
+                        { name: "Image Processing", code: "BCS-604", icon: "fa-image" },
+                        { name: "Natural Language Processing", code: "BCS-605", icon: "fa-language" },
+                        { name: "Cloud Computing", code: "BCS-606", icon: "fa-cloud" },
+                        { name: "Data Warehousing & Mining", code: "BCS-607", icon: "fa-hard-drive" },
+                        { name: "Constitution of India", code: "BNC-501", icon: "fa-book" },
+                        { name: "Essence of Indian Traditional Knowledge", code: "BNC-601", icon: "fa-landmark" }
+                    ],
+                    "AIML": [
+                        { name: "Database Management System", code: "BCS-501", icon: "fa-database" },
+                        { name: "Design & Analysis of Algorithm", code: "BCS-502", icon: "fa-chart-bar" },
+                        { name: "Mathematical Foundation", code: "BAS-501", icon: "fa-square-root-variable" },
+                        { name: "AIML & Data Science", code: "BAI-501", icon: "fa-robot" },
+                        { name: "Artificial Intelligence", code: "BCS-602", icon: "fa-brain" },
+                        { name: "Natural Language Processing", code: "BCS-605", icon: "fa-language" },
+                        { name: "Cloud Computing", code: "BCS-606", icon: "fa-cloud" }
+                    ],
+                    "IT": [
+                        { name: "Database Management System", code: "BIT-501", icon: "fa-database" },
+                        { name: "Design & Analysis of Algorithm", code: "BIT-502", icon: "fa-chart-bar" },
+                        { name: "Web Technology", code: "BIT-601", icon: "fa-globe" },
+                        { name: "Cloud Computing", code: "BIT-602", icon: "fa-cloud" }
+                    ]
+                }
+            },
+            4: {
+                common: [
+                    { name: "4th Year Curriculum & Major Project Resources", code: "PRJ-800", icon: "fa-trophy" }
+                ]
+            }
+        };
+
+        let selectedYear = 1;
+        let selectedBranch = 'CSE';
+        let selectedResource = 'syllabus';
+
+        const resourceActionMap = {
+            'syllabus': { text: 'View Syllabus', icon: 'fa-eye' },
+            'notes': { text: 'Download PDF', icon: 'fa-file-pdf' },
+            'pyq': { text: 'View PYQs', icon: 'fa-file-lines' },
+            'quantum': { text: 'Read Quantum', icon: 'fa-cube' }
+        };
+
+        function setYear(yr) {
+            selectedYear = yr;
+            for(let i=1; i<=4; i++) {
+                const b = document.getElementById(`btn-yr-${i}`);
+                b.className = (i === yr) ? "tab-active px-6 py-3 rounded-xl text-sm font-bold border transition-all shadow-md" : "tab-inactive px-6 py-3 rounded-xl text-sm font-bold border transition-all";
+            }
+            
+            const branchContainer = document.getElementById('branch-container');
+            if(yr === 2 || yr === 3) {
+                branchContainer.classList.remove('hidden');
+            } else {
+                branchContainer.classList.add('hidden');
+            }
+            renderExplorerSubjects();
+        }
+
+        function setBranch(br) {
+            selectedBranch = br;
+            const branches = ['CSE', 'AIML', 'IT', 'ECE', 'EEE', 'Civil', 'Mechanical'];
+            branches.forEach(b => {
+                const el = document.getElementById(`branch-${b.toLowerCase()}`);
+                if(el) {
+                    if(b === br) {
+                        el.className = "bg-indigo-600 text-white px-4 py-2 rounded-lg text-xs font-bold border border-indigo-500 transition-all";
+                    } else {
+                        el.className = "bg-slate-900 text-slate-300 px-4 py-2 rounded-lg text-xs font-bold border border-slate-700 transition-all";
+                    }
+                }
+            });
+            renderExplorerSubjects();
+        }
+
+        function setResource(res) {
+            selectedResource = res;
+            ['syllabus', 'notes', 'pyq', 'quantum'].forEach(r => {
+                const el = document.getElementById(`res-${r}`);
+                el.className = (r === res) ? "tab-active px-5 py-2.5 rounded-lg text-xs font-bold border transition-all flex items-center gap-2" : "tab-inactive px-5 py-2.5 rounded-lg text-xs font-bold border transition-all flex items-center gap-2";
+            });
+            renderExplorerSubjects();
+        }
+
+        function renderExplorerSubjects() {
+            const grid = document.getElementById('explorer-grid');
+            grid.innerHTML = '';
+            
+            let list = [];
+            if(selectedYear === 1 || selectedYear === 4) {
+                list = curriculumData[selectedYear].common;
+            } else {
+                list = curriculumData[selectedYear].subjects[selectedBranch] || curriculumData[selectedYear].subjects['CSE'];
+            }
+
+            const action = resourceActionMap[selectedResource];
+
+            list.forEach(sub => {
+                const html = `
+                    <div class="glass-card p-6 rounded-2xl border border-slate-800 hover:border-indigo-500 transition-all cursor-pointer glow-effect group flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-start mb-3">
+                                <span class="bg-indigo-500/10 text-indigo-400 text-[10px] font-extrabold px-2.5 py-1 rounded border border-indigo-500/20">${sub.code}</span>
+                                <i class="fa-solid ${sub.icon} text-slate-500 group-hover:text-indigo-400 transition-colors text-lg"></i>
+                            </div>
+                            <h3 class="text-sm font-bold text-white mb-1 group-hover:text-indigo-300 transition-colors">${sub.name}</h3>
+                            <p class="text-[10px] text-slate-500 uppercase tracking-widest mb-4">B.Tech Year ${selectedYear} ${selectedYear > 1 && selectedYear < 4 ? '('+selectedBranch+')' : ''}</p>
+                        </div>
+                        <button class="w-full bg-slate-900/80 border border-slate-700 text-slate-300 group-hover:bg-indigo-600 group-hover:text-white group-hover:border-indigo-500 py-2 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-2">
+                            <i class="fa-solid ${action.icon}"></i> ${action.text}
+                        </button>
+                    </div>
+                `;
+                grid.insertAdjacentHTML('beforeend', html);
+            });
+        }
+
+        // --- QUIZ LOGIC ---
+        function updateQuizSubjects() {
+            const yr = document.getElementById('quiz-year').value;
+            const branchWrapper = document.getElementById('quiz-branch-wrapper');
+            const subSelect = document.getElementById('quiz-subject');
+            subSelect.innerHTML = '';
+
+            if(yr == "2" || yr == "3") {
+                branchWrapper.classList.remove('hidden');
+                const branch = document.getElementById('quiz-branch').value;
+                const subs = curriculumData[yr].subjects[branch] || curriculumData[yr].subjects['CSE'];
+                subs.forEach(s => {
+                    subSelect.innerHTML += `<option value="${s.name}">${s.name} (${s.code})</option>`;
+                });
+            } else {
+                branchWrapper.classList.add('hidden');
+                const subs = curriculumData[yr].common;
+                subs.forEach(s => {
+                    subSelect.innerHTML += `<option value="${s.name}">${s.name} (${s.code})</option>`;
+                });
+            }
+            updateQuizUnits();
+        }
+
+        function updateQuizUnits() {
+            updateQuizTopics();
+        }
+
+        function updateQuizTopics() {
+            const subject = document.getElementById('quiz-subject').value;
+            const unit = document.getElementById('quiz-unit').value;
+            const topicSelect = document.getElementById('quiz-topic');
+            topicSelect.innerHTML = '';
+
+            // Sample generated topics based on unit
+            const sampleTopics = [
+                `Introduction & Fundamental Concepts (${subject})`,
+                `Advanced Core Algorithms & Implementation`,
+                `Mathematical Derivations & Theorems`,
+                `Unit ${unit} Case Studies & PYQ Problems`
+            ];
+
+            sampleTopics.forEach(t => {
+                topicSelect.innerHTML += `<option value="${t}">${t}</option>`;
+            });
+        }
+
+        function startCustomQuiz() {
+            const size = parseInt(document.getElementById('quiz-size').value);
+            const topic = document.getElementById('quiz-topic').value;
+            const subject = document.getElementById('quiz-subject').value;
+
+            const container = document.getElementById('quiz-container');
+            container.innerHTML = `
+                <div class="space-y-6">
+                    <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                        <div>
+                            <span class="text-[10px] text-indigo-400 font-bold uppercase">${subject} | ${topic}</span>
+                            <h4 class="text-sm font-bold text-white mt-1">Question 1 of ${size}</h4>
+                        </div>
+                        <div class="bg-rose-500/10 text-rose-400 border border-rose-500/20 px-3 py-1 rounded-lg text-xs font-mono font-bold flex items-center gap-1.5">
+                            <i class="fa-regular fa-clock"></i> 14:59
+                        </div>
+                    </div>
+
+                    <p class="text-sm text-slate-200 font-medium leading-relaxed">
+                        In the context of data structures and university examinations, what is the primary optimization achieved by balancing AVL trees over standard BST?
+                    </p>
+
+                    <div class="space-y-2.5">
+                        <label class="block p-3.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-300 hover:border-indigo-500 cursor-pointer transition-all">
+                            <input type="radio" name="q1" class="mr-2"> A) Guaranteed O(log N) search time in worst case
+                        </label>
+                        <label class="block p-3.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-300 hover:border-indigo-500 cursor-pointer transition-all">
+                            <input type="radio" name="q1" class="mr-2"> B) Eliminates all memory overhead
+                        </label>
+                        <label class="block p-3.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-300 hover:border-indigo-500 cursor-pointer transition-all">
+                            <input type="radio" name="q1" class="mr-2"> C) Allows O(1) random access
+                        </label>
+                        <label class="block p-3.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-300 hover:border-indigo-500 cursor-pointer transition-all">
+                            <input type="radio" name="q1" class="mr-2"> D) None of the above
+                        </label>
+                    </div>
+
+                    <div class="flex justify-between pt-4 border-t border-slate-800">
+                        <button onclick="submitCustomQuiz(${size})" class="bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-2.5 rounded-xl text-xs font-bold transition-all shadow-lg">
+                            Submit & View Analytics <i class="fa-solid fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        async function submitCustomQuiz(totalQ) {
+    const calculatedScore = Math.floor(totalQ * 0.8); // Abhi ke liye 80% score man lete hain
+    const currentSubject = document.getElementById('quiz-subject').value;
+
+    // --- DATABASE MEIN DATA BHEJNE KA CODE ---
+    try {
+        const { data, error } = await supabaseClient
+            .from('quiz_scores')
+            .insert([
+                { 
+                    student_name: 'Akash Rawat', // Tum chaho toh ise dynamically bhi le sakte ho
+                    subject: currentSubject, 
+                    score: calculatedScore 
+                }
+            ]);
+
+        if (error) throw error;
+        console.log("Success! Score database mein save ho gaya.");
+    } catch (error) {
+        console.error("Database error:", error.message);
+    }
+    // -----------------------------------------
+
+    // Niche wala code wahi purana UI update karne ka hai
+    const container = document.getElementById('quiz-container');
+    container.innerHTML = `
+        <div class="space-y-6 text-center py-6">
+            <div class="w-16 h-16 rounded-full bg-emerald-500/10 text-emerald-400 mx-auto flex items-center justify-center text-3xl font-bold border border-emerald-500/20">
+                <i class="fa-solid fa-award"></i>
+            </div>
+            <div>
+                <h3 class="text-xl font-black text-white">Quiz Evaluation Complete!</h3>
+                <p class="text-xs text-slate-400 mt-1">Score successfully saved to Cloud Database.</p>
+            </div>
+            <div class="grid grid-cols-3 gap-4 max-w-md mx-auto">
+                <div class="glass-card p-4 rounded-2xl border border-slate-800">
+                    <p class="text-[10px] text-slate-400 uppercase font-bold">Score</p>
+                    <p class="text-xl font-black text-white mt-1">${calculatedScore} / ${totalQ}</p>
+                </div>
+                <div class="glass-card p-4 rounded-2xl border border-slate-800">
+                    <p class="text-[10px] text-slate-400 uppercase font-bold">Accuracy</p>
+                    <p class="text-xl font-black text-emerald-400 mt-1">80.0%</p>
+                </div>
+                <div class="glass-card p-4 rounded-2xl border border-slate-800">
+                    <p class="text-[10px] text-slate-400 uppercase font-bold">Close Enough</p>
+                    <p class="text-xl font-black text-amber-400 mt-1">2 Qs</p>
+                </div>
+            </div>
+            <button onclick="startCustomQuiz()" class="bg-white text-slate-950 px-6 py-2.5 rounded-xl text-xs font-bold hover:bg-slate-200 transition-all shadow-lg">
+                <i class="fa-solid fa-rotate-right mr-1"></i> Retake Custom Quiz
+            </button>
+        </div>
+    `;
+}
+
+        // Initialize on load
+        renderExplorerSubjects();
+        updateQuizSubjects();
+    </script>
+</body>
+</html>
